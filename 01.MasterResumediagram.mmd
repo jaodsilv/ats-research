@@ -1,0 +1,79 @@
+---
+config:
+  layout: dagre
+---
+flowchart TD
+ subgraph s0["Master Resume Polishing Orchestra"]
+    START --> E1["First version of unpolished Master Resume Written or a new addition to the Master Resume"]
+    s1
+    s2
+    STOP
+    M1["Repeate this process once per new item to add and once in a while and in the first time"] --> s2
+    START@{ shape: start}
+    STOP@{ shape: stop}
+    M1@{ shape: braces}
+    E1@{ shape: event}
+     E1:::EVENT
+     s2:::ORCHESTRA
+     s1:::INPUT_BLOCK
+  end
+  E1 --> IN0["Input Reader"]
+ subgraph s1["Input"]
+        IN0 --> IN1["Resume Best Practices"]
+        IN0 --> IN2["Unpolished Master Resume or Previous Version"]
+        IN0@{ shape: proc}
+        IN1@{ shape: doc}
+        IN2@{ shape: doc}
+        IN0:::INPUT
+        IN1:::INPUT
+        IN2:::INPUT
+  end
+    IN1 --> J1 & J2
+    IN2 --> J1
+ subgraph s2["Master Resume Polishing Orchestra"]
+        J1 --> A1["Content Quality Assessment Evaluator"]
+        A1 --> D1["Were issues found?"]
+        D1 -- No --> D2["Did the Score Decrease?"]
+        D1 -- Yes --> A2["Release Candidate Writer"]
+        D2 -- No --> D3["Is the Score Good Enough?"]
+        D2 -- Yes --> A3["Previous Version Restorer"]
+        A2 -- Write--> RC1["Previous Release Candidate"]
+        A2 --> RC2["Release Candidate"]
+        D3 -- No --> A2
+        D3 -- Yes --> OUT1["Release Version"]
+        RC2 --> J2
+        J2 --> A1
+        A3 <-- Read --> RC1
+        A3 --> OUT1
+        
+        J1@{ shape: junction}
+        A1@{ shape: proc}
+        D1@{ shape: decision}
+        D2@{ shape: decision}
+        D3@{ shape: decision}
+        RC1@{ shape: tag-doc}
+        RC2@{ shape: tag-doc}
+        J2@{ shape: junction}
+        OUT1@{ shape: tag-doc}
+        A2:::AGENT
+        A1:::AGENT
+        D1:::DECISION
+        D2:::DECISION
+        D3:::DECISION
+        RC1:::RELEASE_CANDIDATE
+        RC2:::RELEASE_CANDIDATE
+        OUT1:::OUTPUT
+        A3:::AGENT
+  end
+    OUT1 --> STOP
+    classDef ORCHESTRA stroke-width:2px, stroke-dasharray:none, stroke:#D50000, fill:transparent, color:#D50000
+    classDef SUBORCHESTRA stroke-width:2px, stroke-dasharray:none, stroke:#2962FF, fill:FFE0B2, color:#FFFFFF
+    classDef INPUT_BLOCK stroke-width:2px, stroke-dasharray:none, stroke:#00C853, fill:transparent, color:#00C853
+    classDef INPUT stroke-width:2px, stroke-dasharray:none, fill:#e6ffe6, color:#000000
+    classDef EVENT stroke-width:2px, stroke-dasharray:none, fill:#BBDEFB, color:#000000
+    classDef RESEARCH stroke-width:2px, stroke-dasharray:none, fill:#FFF9C4, color:#000000
+    classDef AGENT stroke-width:2px, stroke-dasharray:none, fill:#FFE0B2, color:#000000
+    classDef DECISION stroke-width:2px, stroke-dasharray:none, fill:#E1BEE7,stroke:#D50000, color:#000000
+    classDef RELEASE_CANDIDATE stroke-width:2px, stroke-dasharray:none, fill:#FFF9C4, stroke:#D50000, color:#000000
+    classDef OUTPUT stroke-width:2px, stroke-dasharray:none, fill:#C8E6C9, color:#000000
+

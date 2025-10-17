@@ -1,0 +1,351 @@
+---
+config:
+  layout: dagre
+---
+flowchart TD
+ subgraph s0["Resume Tailoring Orchestra"]
+        START --> E1["Job Positions Found"]
+        J1["Best Practices + Master Resume + Company Culture"]
+        J2["Best Practices + Company Culture"]
+        J3["Master Resume + Company Culture + Downloaded Job Descriptions"]
+        s1
+        J3 --> SO2["JD Matching Orchestra"]
+        SO2 --> OUT4["Selected Parsed JDs + Match and Skills Gap Analysis"]
+        %% J19
+        %%   SO3["Draft Writing Orchestra"]
+        s3
+
+        %% Polishing Orchestra
+        %% J2 --> J20 & J21
+        SO4["Polishing Orchestra"]
+        %% J20 --> SO4["Polishing Orchestra"]
+        %%   s4
+        %% SO4 --> J21
+        SO4 --> SO5
+
+        %% Length Fitting Orchestra
+        SO5["Ideal Length Fitting Orchestra"]
+        %% J21 --> SO5["Ideal Length Fitting Orchestra"]
+        %%   s5
+        SO5 --> OUT1(["Release Version"])
+        STOP
+
+        %% Shape definitions
+        START@{ shape: start}
+        E1@{ shape: event}
+        J1@{ shape: junction}
+        J2@{ shape: junction}
+        J3@{ shape: junction}
+        SO2@{ shape: procs}
+        OUT4@{ shape: docs}
+        %% J20@{ shape: junction}
+        SO4@{ shape: procs}
+        %% J21@{ shape: junction}
+        SO5@{ shape: procs}
+        STOP@{ shape: stop}
+
+        %% Class assignments
+        s1:::INPUT_BLOCK
+        SO2:::SUBORCHESTRA
+        OUT4:::OUTPUT
+        s3:::ORCHESTRA
+        SO4:::SUBORCHESTRA
+        SO5:::SUBORCHESTRA
+        
+        %% Styles
+        style J1 stroke #000
+        style J2 stroke #000
+        style J3 stroke #000
+        %% style J20 stroke #000
+        %% style J21 stroke #000
+ end
+  E1 --> MA1 & IN0
+
+ subgraph s1["Input"]
+        MA1["Document Fetcher (Fetch Raw Job Descriptions)"]
+        IN0["Input Reader"] -- Read--> IN1 & IN2 & IN3
+
+        %% Input Documents
+        IN1["Resume Best Practices Guidelines"]
+        IN2["Master Resume"]
+        IN3["Company Culture Report"]
+        MA1 --> OUT3["Raw Job Descriptions"]
+
+        %% Shape definitions
+        MA1@{ shape: procs}
+        IN0@{ shape: proc}
+        IN1@{ shape: doc}
+        IN2@{ shape: doc}
+        IN3@{ shape: doc}
+        OUT3@{ shape: docs}
+        
+        %% Class assignments
+        MA1:::AGENT
+        IN0:::INPUT
+        IN1:::INPUT
+        IN2:::INPUT
+        IN3:::INPUT
+        OUT3:::OUTPUT
+  end
+  IN1 --> J1 & J2
+  IN2 --> J1 & J3 & J9
+  %% IN2 --> J1 & J3 & J9 & J14
+  IN3 --> J1 & J2 & J3
+  OUT3 --> J3
+  J1 --> J7
+  %% J1 --> J8 & J16
+  
+%%  subgraph s2["JD Matching Orchestra"]
+%%         MA2["Job Description Parser"]
+%%         J17["Junction - Master Resume + Company Culture"]
+%%         MA3["Resume x Job Description Match<br>and Skills Gap Analysis"]
+%%         D1["Is there a Single Job Description?"]
+%%         A1["Rank Job Descriptions"]
+%%         A2["Select Job Descriptions to Apply"]
+%%         J6["Junction"]
+%%         J8["Junction"]
+%%         
+%%         %% Internal relationships within s2
+%%         %% J3 --> J17
+%%         J17 --> MA3
+%%         MA3 --> D1
+%%         D1 -- Single Job Description --> J7
+%%         D1 -- Multiple Job Descriptions --> A1
+%%         A1 --> A2
+%%         A2 --> J6
+%%         J6 --> A3
+%%         J8 --> J6 & J7
+%%         
+%%         %% Shape definitions
+%%         MA2@{ shape: procs}
+%%         J17@{ shape: junction}
+%%         MA3@{ shape: procs}
+%%         D1@{ shape: decision}
+%%         A1@{ shape: proc}
+%%         A2@{ shape: proc}
+%%         J6@{ shape: junction}
+%%         J8@{ shape: junction}
+%%         
+%%         %% Class assignments
+%%         MA2:::AGENT
+%%         MA3:::AGENT
+%%         D1:::DECISION
+%%         A1:::AGENT
+%%         A2:::AGENT
+%%         
+%%         %% Styles
+%%         style J17 stroke #000
+%%         style J6 stroke #000
+%%         style J8 stroke #000
+%%   end
+ subgraph s3["Draft writing Orchestra"]
+        J9 --> J4 & J5
+        J4 --> A4["Fact Checker"]
+        J7 --> A3["Draft Writer"]
+        A3 --> J4
+        D2 -- Yes --> H["Revised Draft Writer"]
+        A4 --> D2{"Has False Facts?"}
+        H --> J5
+        J5 --> A4
+        
+        %% Shape definitions
+        J9@{ shape: junction}
+        J4@{ shape: junction}
+        A4@{ shape: procs}
+        J7@{ shape: junction}
+        A3@{ shape: doc}
+        H@{ shape: doc}
+        J5@{ shape: junction}
+        
+        %% Class assignments
+        A4:::AGENT
+        A3:::OUTPUT
+        D2:::DECISION
+        H:::OUTPUT
+        
+        %% Styles
+        style J9 stroke #000
+        style J4 stroke #000
+        style J7 stroke #000
+        style J5 stroke #000
+  end
+    %% D2 -- No --> J10
+    %% D2 -- No --> J20
+    D2 -- No --> SO4
+%%  subgraph s4["Polishing Orchestra"]
+%%         I["Quality Assessment Review"]
+%%         J["Fact Check"]
+%%         K["Release Candidate"]
+%%         n38["does it have critical issues?"]
+%%         J10["Junction"]
+%%         J11["Junction"]
+%%         J12["Junction"]
+%%         J13["Junction"]
+%%         n63["Update Previous Version"]
+%%         n64["Previous Version"]
+%%         n65["Did the score Decrease?"]
+%%         n66["Restore Previous Version"]
+%%         n67["Is The score good enough?"]
+%%         n68["Fix issues pointed by Quality Assessment Review"]
+%%         J14["Junction"]
+%%         J15["Junction"]
+%%         J16["Junction"]
+%%         
+%%         %% Internal relationships within s4
+%%         J --> K
+%%         I --> n38 & n65
+%%         %% n38 -- Yes --> J11
+%%         %% J10 --> I
+%%         K --> n63
+%%         %% K --> J12 & n63
+%%         %% J11 --> n68
+%%         %% J12 --> I
+%%         %% J13 --> J12 & J10
+%%         n63 --> n64
+%%         n65 -- Yes --> n66
+%%         n65 -- No --> n67
+%%         n38 -- No --> n65
+%%         %% n68 --> J14
+%%         %% J14 --> J
+%%         n67 -- Yes --> n72
+%%         n67 -- No --> J15
+%%         %% J15 --> n68
+%%         n66 <--> n64
+%%         n66 --> n72
+%%         %% J16 --> J11 & J15
+%%         
+%%         %% Shape definitions
+%%         I@{ shape: procs}
+%%         J@{ shape: procs}
+%%         K@{ shape: doc}
+%%         n38@{ shape: decision}
+%%         n65@{ shape: decision}
+%%         n63@{ shape: procs}
+%%         n64@{ shape: tag-doc}
+%%         n66@{ shape: procs}
+%%         n67@{ shape: decision}
+%%         n68@{ shape: doc}
+%%         J10@{ shape: junction}
+%%         J11@{ shape: junction}
+%%         J12@{ shape: junction}
+%%         J13@{ shape: junction}
+%%         J14@{ shape: junction}
+%%         J15@{ shape: junction}
+%%         J16@{ shape: junction}
+%%         
+%%         %% Class assignments
+%%         I:::AGENT
+%%         J:::AGENT
+%%         K:::OUTPUT
+%%         n38:::DECISION
+%%         n65:::DECISION
+%%         n63:::AGENT
+%%         n64:::OUTPUT
+%%         n66:::AGENT
+%%         n67:::DECISION
+%%         n68:::OUTPUT
+%%         
+%%         %% Styles
+%%         style J10 stroke #000
+%%         style J11 stroke #000
+%%         style J12 stroke #000
+%%         style J13 stroke #000
+%%         style J14 stroke #000
+%%         style J15 stroke #000
+%%         style J16 stroke #000
+%%   end
+%%  subgraph s5["Ideal Length Fitting Orchestra"]
+%%         n72["Apply text to .tex Template"]
+%%         n73["Human Visual Evaluation Feedback"]
+%%         n74["Is it short enough?"]
+%%         n75["Text Reduction Evaluator"]
+%%         n76["Text Rewriter"]
+%%         n77["New Release Candidate"]
+%%         n78["Human Visual Evaluation Feedback"]
+%%         n79["Is it short enough?"]
+%%         n80["Text Prioritizer"]
+%%         n81["Text Remover"]
+%%         n82["Are there more lines that we can rewrite?"]
+%%         n83["Text Impact Ranker"]
+%%         n84["Apply text to .tex Template"]
+%%         n85["Text to Change Classifier"]
+%%         n86["Comment Left"]
+%%         n87["Text Changes Ranker"]
+%%         
+%%         %% Internal relationships within s5
+%%         n72 --> n73
+%%         n73 --> n74
+%%         n74 -- Yes --> OUT1
+%%         n74 -- No --> n83
+%%         n75 --> n76 & n87
+%%         n76 --> n77
+%%         n77 --> n78
+%%         n78 --> n79
+%%         n79 -- Yes --> OUT1
+%%         n79 --> n80 & n82
+%%         n80 --> n81
+%%         n82 -- Yes --> n76
+%%         n82 -- No --> n80
+%%         n83 --> n85
+%%         n85 --> n75
+%%         n87 --> n76
+%%         
+%%         %% Shape definitions
+%%         n73@{ shape: manual-input}
+%%         n74@{ shape: decision}
+%%         n83@{ shape: procs}
+%%         n85@{ shape: procs}
+%%         n75@{ shape: procs}
+%%         n76@{ shape: procs}
+%%         n87@{ shape: procs}
+%%         n77@{ shape: doc}
+%%         n78@{ shape: manual-input}
+%%         n79@{ shape: decision}
+%%         n80@{ shape: procs}
+%%         n81@{ shape: procs}
+%%         n82@{ shape: decision}
+%%         n86@{ shape: comment}
+%%         
+%%         %% Class assignments
+%%         n73:::INPUT
+%%         n74:::DECISION
+%%         n83:::AGENT
+%%         n85:::AGENT
+%%         n75:::AGENT
+%%         n76:::AGENT
+%%         n87:::AGENT
+%%         n77:::OUTPUT
+%%         n78:::INPUT
+%%         n79:::DECISION
+%%         n80:::AGENT
+%%         n81:::AGENT
+%%         n82:::DECISION
+%%   end
+  
+    %% J2 --> J13
+    
+    %% ========================================
+    %% Cross-subgraph relationships
+    %% ========================================
+    OUT4 --> J7
+    OUT1 --> STOP
+    
+    %% ========================================
+    %% Class Assignments (Global)
+    %% ========================================
+    
+    %% Main Orchestra
+    
+    %% ========================================
+    %% Class Definitions
+    %% ========================================
+    classDef ORCHESTRA stroke-width:2px, stroke-dasharray:none, stroke:#D50000, fill:transparent, color:#D50000
+    classDef SUBORCHESTRA stroke-width:2px, stroke-dasharray:none, stroke:#2962FF, fill:FFE0B2, color:#FFFFFF
+    classDef INPUT_BLOCK stroke-width:2px, stroke-dasharray:none, stroke:#00C853, fill:transparent, color:#00C853
+    classDef INPUT stroke-width:2px, stroke-dasharray:none, fill:#e6ffe6, color:#000000
+    classDef EVENT stroke-width:2px, stroke-dasharray:none, fill:#BBDEFB, color:#000000
+    classDef RESEARCH stroke-width:2px, stroke-dasharray:none, fill:#FFF9C4, color:#000000
+    classDef AGENT stroke-width:2px, stroke-dasharray:none, fill:#FFE0B2, color:#000000
+    classDef DECISION stroke-width:2px, stroke-dasharray:none, fill:#E1BEE7,stroke:#D50000, color:#000000
+    classDef RELEASE_CANDIDATE stroke-width:2px, stroke-dasharray:none, fill:#FFF9C4, stroke:#D50000, color:#000000
+    classDef OUTPUT stroke-width:2px, stroke-dasharray:none, fill:#C8E6C9, color:#000000

@@ -1,0 +1,67 @@
+---
+config:
+  layout: dagre
+---
+flowchart TD
+ subgraph s1["Resume/Cover Letter<br/>Tailoring Orchestra"]
+        START --> E1["Job Positions Found"]
+        E1 --> IN1["Input Documents"]
+        E1 --> SO1["Document Fetcher (Fetch Raw Job Descriptions)"]
+        SO1 --> OUT2["Raw Job Descriptions"]
+        OUT2 --> J18
+        IN1 --> J18 & J19 & J20 & J21
+        J18 --> SO2["JD Matching Orchestra"]
+        SO2 --> OUT3["Selected Parsed JDs + Match and Skills Gap Analysis"]
+        OUT3 --> J19
+        J19 --> SO3["Draft Writing Orchestra"]
+        SO3 --> OUT4["Draft Documents"]
+        OUT4 --> J20
+        J20 --> SO4["Polishing Orchestra"]
+        SO4 --> OUT5["Release Candidates"]
+        OUT5 --> J21
+        J21 --> SO5["Ideal Length Fitting Orchestra"]
+        SO5 --> OUT1["Release Version"]
+        OUT1 --> STOP
+        
+        %% Internal relationships within s1
+
+        START@{ shape: start}
+        E1@{ shape: event}
+        IN1@{ shape: docs}
+        SO1@{ shape: procs}
+        J18@{ shape: junction}
+        SO2@{ shape: procs}
+        J19@{ shape: junction}
+        SO3@{ shape: procs}
+        J20@{ shape: junction}
+        SO4@{ shape: procs}
+        J21@{ shape: junction}
+        SO5@{ shape: procs}
+        OUT1@{ shape: tag-doc}
+        OUT2@{ shape: docs}
+        OUT3@{ shape: docs}
+        OUT4@{ shape: docs}
+        OUT5@{ shape: docs}
+        STOP@{ shape: stop}
+        E1:::EVENT
+        IN1:::INPUT
+        SO1:::SUBORCHESTRA
+        SO2:::SUBORCHESTRA
+        SO3:::SUBORCHESTRA
+        SO4:::SUBORCHESTRA
+        SO5:::SUBORCHESTRA
+        OUT1:::OUTPUT
+        OUT2:::OUTPUT
+        OUT3:::OUTPUT
+        OUT4:::OUTPUT
+        OUT5:::OUTPUT
+  end
+     s1:::ORCHESTRA
+    
+    classDef ORCHESTRA stroke-width:2px, stroke-dasharray:none, stroke:#D50000,fill:transparent, color:#D50000
+    classDef SUBORCHESTRA stroke-width:2px, stroke-dasharray:none, stroke:#2962FF,fill:FFE0B2, color:#FFFFFF
+    classDef INPUT stroke-width:2px, stroke-dasharray:none, fill:#e6ffe6, color:#000000
+    classDef EVENT stroke-width:2px, stroke-dasharray:none, fill:#BBDEFB, color:#000000
+    classDef RESEARCH stroke-width:2px, stroke-dasharray:none, fill:#FFF9C4, color:#000000
+    classDef AGENT stroke-width:2px, stroke-dasharray:none, fill:#FFE0B2, color:#000000
+    classDef OUTPUT stroke-width:2px, stroke-dasharray:none, fill:#C8E6C9, color:#000000

@@ -1,0 +1,93 @@
+---
+config:
+  layout: dagre
+---
+flowchart TD
+ subgraph s0["Resume/Cover Letter Tailoring Orchestra"]
+        START["Start"]
+        START --> E1["Job Positions Found"]
+        s1
+        s2
+        SO1["Draft Writing Orchestra"] --> SO2["Polishing Orchestra"]
+        SO2 --> SO3["Ideal Length Fitting Orchestra"]
+        SO3 --> OUT1["Release Version"]
+        OUT1 --> STOP["Stop"]
+        START@{ shape: start}
+        E1@{ shape: event}
+        SO1@{ shape: procs}
+        SO2@{ shape: procs}
+        SO3@{ shape: procs}
+        OUT1@{ shape: tag-doc}
+        STOP@{ shape: stop}
+        E1:::EVENT
+        SO1:::SUBORCHESTRA
+        SO2:::SUBORCHESTRA
+        SO3:::SUBORCHESTRA
+        OUT1:::OUTPUT
+        s1:::INPUT_BLOCK
+        s2:::ORCHESTRA
+ end
+E1 --> MA1 & IN0["Input Reader"]
+ subgraph s1["Input and Data Preparation"]
+        IN0["Input Reader"]
+        IN0 -- Read --> IN1["Master Resume"]
+        IN0 -- Read --> IN2["Company Culture Report"]
+        MA1["Document Fetcher (Fetch Raw Job Descriptions)"]
+        MA1 -- Write --> OUT3["Raw Job Descriptions"]
+        OUT3 --> MA2["Job Description Parser"]
+        MA2 -- Write --> OUT2["Parsed Job Descriptions"]
+
+        IN0@{ shape: proc}
+        IN1@{ shape: doc}
+        IN2@{ shape: doc}
+        MA1@{ shape: procs}
+        OUT3@{ shape: docs}
+        MA2@{ shape: procs}
+        OUT2@{ shape: docs}
+         IN0:::INPUT
+         IN1:::INPUT
+         IN2:::INPUT
+         OUT3:::OUTPUT
+         MA1:::AGENT
+         MA2:::AGENT
+         OUT2:::OUTPUT
+  end
+IN1 --> J2
+IN2 --> J2
+OUT2 --> J2
+ 
+ subgraph s2["JD Matching Orchestra"]
+        J2 --> MA3["Resume-Job Description Matcher<br>(with Skills Gap Analysis)"]
+        MA3 -- Write --> OUT4["JD x Resume Match and Skills Gap Analysis"]
+        OUT4 --> D1["Are there multiple Job Descriptions?"]
+        D1 -- Yes --> A1["JDs Ranker"]
+        A1 --> A2["JDs Selector"]
+        A2 -- Write --> OUT5["Selected Parsed JDs + Match and Skills Gap Analysis"]
+
+        OUT4@{ shape: docs}
+        OUT5@{ shape: docs}
+        J2@{ shape: junction}
+        MA3@{ shape: procs}
+        D1@{ shape: diam}
+        A1@{ shape: proc}
+        A2@{ shape: proc}
+         OUT4:::OUTPUT
+         OUT5:::OUTPUT
+         MA3:::AGENT
+         D1:::DECISION
+         A1:::AGENT
+         A2:::AGENT
+  end
+D1 -- No --> SO1
+OUT5 --> SO1
+
+classDef ORCHESTRA stroke-width:2px, stroke-dasharray:none, stroke:#D50000, fill:transparent, color:#D50000
+classDef SUBORCHESTRA stroke-width:2px, stroke-dasharray:none, stroke:#2962FF, fill:FFE0B2, color:#FFFFFF
+classDef INPUT_BLOCK stroke-width:2px, stroke-dasharray:none, stroke:#00C853, fill:transparent, color:#00C853
+classDef INPUT stroke-width:2px, stroke-dasharray:none, fill:#e6ffe6, color:#000000
+classDef EVENT stroke-width:2px, stroke-dasharray:none, fill:#BBDEFB, color:#000000
+classDef RESEARCH stroke-width:2px, stroke-dasharray:none, fill:#FFF9C4, color:#000000
+classDef AGENT stroke-width:2px, stroke-dasharray:none, fill:#FFE0B2, color:#000000
+classDef DECISION stroke-width:2px, stroke-dasharray:none, fill:#E1BEE7,stroke:#D50000, color:#000000
+classDef RELEASE_CANDIDATE stroke-width:2px, stroke-dasharray:none, fill:#FFF9C4, stroke:#D50000, color:#000000
+classDef OUTPUT stroke-width:2px, stroke-dasharray:none, fill:#C8E6C9, color:#000000

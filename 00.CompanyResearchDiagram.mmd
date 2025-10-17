@@ -1,0 +1,25 @@
+---
+config:
+  layout: elk
+---
+flowchart TD
+ subgraph s1["Company Culture Research"]
+        START --> E1@{ label: "JD found in a new Company" }
+        E1 --> R1["Company Culture Researcher<br>with Claude.ai"]
+        R1 --> OUT1["Company Culture Report"]
+        OUT1 --> STOP["stop"]
+        START@{ shape: start}
+        E1@{ shape: event}
+        OUT1@{ shape: doc}
+        STOP@{ shape: stop}
+        E1:::EVENT
+        R1:::RESEARCH
+        OUT1:::OUTPUT
+  end
+    s1:::ORCHESTRA
+    classDef ORCHESTRA stroke-width:2px, stroke-dasharray:none, stroke:#D50000,fill:transparent, color:#D50000
+    classDef EVENT stroke-width:2px, stroke-dasharray:none, fill:#BBDEFB, color:#000000
+    classDef RESEARCH stroke-width:2px, stroke-dasharray:none, fill:#FFF9C4, color:#000000
+    classDef AGENT stroke-width:2px, stroke-dasharray:none, fill:#FFE0B2, color:#000000
+    classDef OUTPUT stroke-width:2px, stroke-dasharray:none, fill:#C8E6C9, color:#000000
+    

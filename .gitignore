@@ -1,0 +1,24 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Temporary files
+temp/
+tmp/
+.snapshots/
+
+# Generated outputs from diagrams
+rendered/
+*.html
+*.png
+*.svg
+
+# Mermaid CLI cache
+.mermaid/
