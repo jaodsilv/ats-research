@@ -28,42 +28,61 @@ flowchart TD
         IN1:::INPUT
         IN2:::INPUT
   end
-    IN1 --> J1 & J2
-    IN2 --> J1
+    IN1 --> W1 & W2
+    IN2 --> W1
+    V1 --> J1
+    W2 --> J1
  subgraph s2["Master Resume Polishing Orchestra"]
+        W1 --> VM1["Version Manager"]
+        VM1 --> V1["Initial Version Stored"]
         J1 --> A1["Content Quality Assessment Evaluator"]
         A1 --> D1["Were issues found?"]
         D1 -- No --> D2["Did the Score Decrease?"]
         D1 -- Yes --> A2["Release Candidate Writer"]
         D2 -- No --> D3["Is the Score Good Enough?"]
-        D2 -- Yes --> A3["Previous Version Restorer"]
-        A2 -- Write--> RC1["Previous Release Candidate"]
+        D2 -- Yes --> VM3["Version Manager"]
         A2 --> RC2["Release Candidate"]
+        RC2 --> VM2["Version Manager"]
+        VM2 --> V2["Version Stored"]
+        V2 --> W2
         D3 -- No --> A2
         D3 -- Yes --> OUT1["Release Version"]
-        RC2 --> J2
-        J2 --> A1
-        A3 <-- Read --> RC1
-        A3 --> OUT1
-        
+        VM3 --> RESTORED["Previous Version Restored"]
+        RESTORED --> OUT1
+
+        W1@{ shape: stadium}
+        VM1@{ shape: procs}
+        V1@{ shape: docs}
         J1@{ shape: junction}
         A1@{ shape: proc}
         D1@{ shape: decision}
         D2@{ shape: decision}
         D3@{ shape: decision}
-        RC1@{ shape: tag-doc}
+        VM3@{ shape: procs}
         RC2@{ shape: tag-doc}
-        J2@{ shape: junction}
+        VM2@{ shape: procs}
+        V2@{ shape: docs}
+        W2@{ shape: stadium}
         OUT1@{ shape: tag-doc}
+        RESTORED@{ shape: docs}
         A2:::AGENT
         A1:::AGENT
+        VM1:::AGENT
+        VM2:::AGENT
+        VM3:::AGENT
         D1:::DECISION
         D2:::DECISION
         D3:::DECISION
-        RC1:::RELEASE_CANDIDATE
         RC2:::RELEASE_CANDIDATE
         OUT1:::OUTPUT
-        A3:::AGENT
+        V1:::OUTPUT
+        V2:::OUTPUT
+        RESTORED:::OUTPUT
+        W1:::WAIT
+        W2:::WAIT
+
+        %% Styles
+        style J1 stroke #000
   end
     OUT1 --> STOP
     classDef ORCHESTRA stroke-width:2px, stroke-dasharray:none, stroke:#D50000, fill:transparent, color:#D50000
@@ -76,4 +95,5 @@ flowchart TD
     classDef DECISION stroke-width:2px, stroke-dasharray:none, fill:#E1BEE7,stroke:#D50000, color:#000000
     classDef RELEASE_CANDIDATE stroke-width:2px, stroke-dasharray:none, fill:#FFF9C4, stroke:#D50000, color:#000000
     classDef OUTPUT stroke-width:2px, stroke-dasharray:none, fill:#C8E6C9, color:#000000
+    classDef WAIT stroke-width:2px, stroke-dasharray:none, fill:#FFB74D, stroke:#F57C00, color:#000000
 

@@ -4,22 +4,22 @@ flowchart TD
         E1["JD found in a new (Region, Role, Level) Tuple"]
         R1["Cover Letter Best Practices Researcher<br>"]
         R2["Real World Successful and Failed Cover Letter Researcher"]
-        J1["JUNCTION"]
+        W1["WAIT"]
         A1["Successful and Failed Cover Letters to Best Practices Document Merger"]
         OUT1["Cover Letter Best Practices"]
         STOP["Stop"]
-        
+
         %% Internal relationships within s1
         Start --> E1
         E1 --> R1
-        R1 --> R2 & J1
-        R2 --> J1
-        J1 --> A1
+        R1 --> R2 & W1
+        R2 --> W1
+        W1 --> A1
         A1 --> OUT1
         OUT1 --> STOP
         Start@{ shape: start}
         E1@{ shape: event}
-        J1@{ shape: junction}
+        W1@{ shape: stadium}
         OUT1@{ shape: doc}
         STOP@{ shape: stop}
         R1:::RESEARCH
@@ -27,6 +27,7 @@ flowchart TD
         A1:::AGENT
         OUT1:::OUTPUT
         E1:::EVENT
+        W1:::WAIT
   end
 
      s1:::ORCHESTRA
@@ -35,3 +36,4 @@ flowchart TD
     classDef RESEARCH stroke-width:2px, stroke-dasharray:none, fill:#FFF9C4, color:#000000
     classDef AGENT stroke-width:2px, stroke-dasharray:none, fill:#FFE0B2, color:#000000
     classDef OUTPUT stroke-width:2px, stroke-dasharray:none, fill:#C8E6C9, color:#000000
+    classDef WAIT stroke-width:2px, stroke-dasharray:none, fill:#FFB74D, stroke:#F57C00, color:#000000

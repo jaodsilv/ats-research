@@ -5,23 +5,21 @@ config:
 flowchart TD
  subgraph s1["Resume/Cover Letter<br/>Tailoring Orchestra"]
         START --> E1["Job Positions Found"]
-        E1 --> IN1["Input Documents"]
-        E1 --> SO1["Document Fetcher (Fetch Raw Job Descriptions)"]
-        SO1 --> OUT2["Raw Job Descriptions"]
-        OUT2 --> J18
-        IN1 --> J18 & J19 & J20 & J21
-        J18 --> SO2["JD Matching Orchestra"]
+        E1 --> SO1["Input and Data Preparation"]
+        SO1 --> IN1["Input Data"]
+        IN1 --> SO2["JD Matching Orchestra"]
         SO2 --> OUT3["Selected Parsed JDs + Match and Skills Gap Analysis"]
-        OUT3 --> J19
-        J19 --> SO3["Draft Writing Orchestra"]
-        SO3 --> OUT4["Draft Documents"]
-        OUT4 --> J20
-        J20 --> SO4["Polishing Orchestra"]
-        SO4 --> OUT5["Release Candidates"]
-        OUT5 --> J21
-        J21 --> SO5["Ideal Length Fitting Orchestra"]
-        SO5 --> OUT1["Release Version"]
-        OUT1 --> STOP
+        OUT3 --> SO3["Resume Writing Orchestra"]
+        OUT3 --> SO4["Cover Letter Writing Orchestra"]
+        SO3 --> OUT5["Resume Release Candidates"]
+        SO4 --> OUT6["Cover Letter Release Candidates"]
+        OUT5 --> SO5["Ideal Length Fitting Orchestra"]
+        OUT6 --> SO6["Ideal Length Fitting Orchestra"]
+        SO5 --> OUT1["Resume Release Version"]
+        SO6 --> OUT2["Cover Letter Release Version"]
+        OUT1 --> FINAL_WAIT["Wait"]
+        OUT2 --> FINAL_WAIT
+        FINAL_WAIT --> STOP
         
         %% Internal relationships within s1
 
@@ -29,19 +27,18 @@ flowchart TD
         E1@{ shape: event}
         IN1@{ shape: docs}
         SO1@{ shape: procs}
-        J18@{ shape: junction}
         SO2@{ shape: procs}
-        J19@{ shape: junction}
         SO3@{ shape: procs}
-        J20@{ shape: junction}
         SO4@{ shape: procs}
-        J21@{ shape: junction}
         SO5@{ shape: procs}
+        SO6@{ shape: procs}
         OUT1@{ shape: tag-doc}
-        OUT2@{ shape: docs}
+        OUT2@{ shape: tag-doc}
+        IN1@{ shape: docs}
         OUT3@{ shape: docs}
-        OUT4@{ shape: docs}
         OUT5@{ shape: docs}
+        OUT6@{ shape: docs}
+        FINAL_WAIT@{ shape: stadium}
         STOP@{ shape: stop}
         E1:::EVENT
         IN1:::INPUT
@@ -50,11 +47,14 @@ flowchart TD
         SO3:::SUBORCHESTRA
         SO4:::SUBORCHESTRA
         SO5:::SUBORCHESTRA
+        SO6:::SUBORCHESTRA
         OUT1:::OUTPUT
         OUT2:::OUTPUT
+        IN1:::OUTPUT
         OUT3:::OUTPUT
-        OUT4:::OUTPUT
         OUT5:::OUTPUT
+        OUT6:::OUTPUT
+        FINAL_WAIT:::WAIT
   end
      s1:::ORCHESTRA
     
@@ -65,3 +65,4 @@ flowchart TD
     classDef RESEARCH stroke-width:2px, stroke-dasharray:none, fill:#FFF9C4, color:#000000
     classDef AGENT stroke-width:2px, stroke-dasharray:none, fill:#FFE0B2, color:#000000
     classDef OUTPUT stroke-width:2px, stroke-dasharray:none, fill:#C8E6C9, color:#000000
+    classDef WAIT stroke-width:2px, stroke-dasharray:none, fill:#FFB74D, stroke:#F57C00, color:#000000
