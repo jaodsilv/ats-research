@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//d/src/tmp/ATS/**)",
+      "Bash(mmdc:*)",
+      "Bash(git add:*)",
+      "Bash(git push:*)",
+      "Bash(gh repo view:*)",
+      "Bash(gh api:*)",
+      "Bash(test:*)",
+      "Bash(python:*)",
+      "Bash(cat:*)",
+      "Bash(mkdir:*)"
+    ]
+  },
+  "disabledMcpjsonServers": [
+    "todo"
+  ]
+}
