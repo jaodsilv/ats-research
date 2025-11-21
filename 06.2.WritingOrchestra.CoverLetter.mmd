@@ -1,0 +1,153 @@
+---
+config:
+  layout: elk
+---
+flowchart TD
+ subgraph s0["Cover Letter Tailoring Orchestra"]
+        START --> W_INPUT["Best Practices
+        + Master Resume
+        + Company Culture
+        + Parsed JD
+        + Match and Skills Gap Analysis"]
+
+        M1["Repeate this process with one orchestrator agent per selected Job Description"]
+        M1@{ shape: braces}
+
+        START@{ shape: start}
+        W_INPUT@{ shape: stadium}
+        STOP1@{ shape: stop}
+
+        W_INPUT:::WAIT
+        s2:::ORCHESTRA
+
+        style W_INPUT stroke #000
+        style W1 stroke #000
+ end
+
+
+ subgraph s2["Writing Orchestra"]
+        %% Initial draft writing
+        W_INPUT -- Launch 1 subagent --> A_DRAFT_WRITER["Cover Letter Draft Writer"]
+        A_DRAFT_WRITER --> INITIAL_DRAFT["Initial Draft"]
+
+        %% Merge all incoming paths
+        INITIAL_DRAFT --> J2
+        FIXED --> J2
+        POLISHED --> J2
+
+        %% Fact checking
+        J2 -- Launch 1 orchestrator subagent --> SO0["Fact Checking Loop Orchestra"]
+        SO0 -- Promote Version --> TRUTHFUL["Truthful Draft"]
+
+        %% Version management
+        TRUTHFUL -- Launch 1 subagent --> AI_WRITTEN_DETECTOR["AI vs Human Written Detector"]
+        AI_WRITTEN_DETECTOR -- Report + Confidence Score --> D4{"Does it look like it was written by a Human?
+              (99.9% confident)"}
+       D4 -- No
+              Launch 1 subagent --> DRAFT_HUMANIZER["Draft Humanizer"]
+       DRAFT_HUMANIZER --> HUMANIZED_DRAFT["Humanized Draft"]
+       HUMANIZED_DRAFT --> AI_WRITTEN_DETECTOR
+        D4 -- Yes
+              Launch 1 subagent --> A1["Version Manager"]
+        A1 -- Store Version --> V1["Stored Version"]
+        V1 --> W1["Best Practices 
+         + Master Resume
+         + Company Culture
+         + Parsed JD
+         + Match and Skills Gap Analysis
+         + Draft Document"]
+
+        %% Main evaluation loop entry point
+        W1 -- Launch 1 or + subagents --> A2["Document Evaluator
+        May contain sub-sub-agents"]
+        A2 --> EVAL["Quality Score + Issue Report"]
+        EVAL --> D1{"Has Critical Issues?"}
+
+        %% Decision 1: Critical Issues Check
+        D1 -- Yes
+        Launch 1 subagent --> A3["Issue Fixer"]
+        A3 --> FIXED["Fixed Draft"]
+
+        D1 -- No --> D2{"Did Score Decrease?"}
+
+        %% Decision 2: Score Degradation Check
+        D2 -- Yes
+        Launch 1 subagent --> A5["Version Manager"]
+        A5 -- Restore Previous Version --> RESTORED["Previous Version Restored"]
+        RESTORED -- Promote to Polished Document --> OUT1["Polished Document"]
+
+        D2 -- No --> D3{"Is Score Good Enough?"}
+
+        %% Decision 3: Quality Threshold Check
+        D3 -- Yes
+        Promote to Polished Document --> OUT1
+
+        D3 -- No
+        Launch 1 subagent --> A4["Document Polisher"]
+        A4 --> POLISHED["Improved Draft"]
+
+        %% Shape definitions
+        A_DRAFT_WRITER@{ shape: proc}
+        INITIAL_DRAFT@{ shape: doc}
+        J2@{ shape: junction}
+        SO0@{ shape: procs}
+        A1@{ shape: proc}
+        A2@{ shape: procs}
+        A3@{ shape: proc}
+        A4@{ shape: proc}
+        A5@{ shape: proc}
+        V1@{ shape: doc}
+        TRUTHFUL@{ shape: doc}
+        AI_WRITTEN_DETECTOR@{ shape: proc}
+        HUMANIZED_DRAFT@{ shape: doc}
+        DRAFT_HUMANIZER@{ shape: proc}
+        W1@{ shape: stadium}
+        EVAL@{ shape: doc}
+        FIXED@{ shape: doc}
+        POLISHED@{ shape: doc}
+        RESTORED@{ shape: doc}
+        OUT1@{ shape: doc}
+
+        %% Class assignments
+        A_DRAFT_WRITER:::AGENT
+        INITIAL_DRAFT:::OUTPUT
+        SO0:::SUBORCHESTRA
+        A2:::SUBORCHESTRA
+        A1:::AGENT
+        A3:::AGENT
+        A4:::AGENT
+        A5:::AGENT
+        D1:::DECISION
+        D2:::DECISION
+        D3:::DECISION
+        EVAL:::OUTPUT
+        FIXED:::OUTPUT
+        POLISHED:::OUTPUT
+        RESTORED:::OUTPUT
+        TRUTHFUL:::OUTPUT
+        AI_WRITTEN_DETECTOR:::AGENT
+        HUMANIZED_DRAFT:::OUTPUT
+        DRAFT_HUMANIZER:::AGENT
+        D4:::DECISION
+        OUT1:::OUTPUT
+        V1:::OUTPUT
+        W1:::WAIT
+
+        %% Styles
+        style J2 stroke #000
+        style SO0 stroke #000
+        style A2 stroke #000
+ end
+        OUT1 --> STOP1
+
+    classDef ORCHESTRA stroke-width:2px, stroke-dasharray:none, stroke:#D50000, fill:transparent, color:#D50000
+    classDef SUBORCHESTRA stroke-width:2px, stroke-dasharray:none, stroke:#2962FF, fill:FFE0B2, color:#FFFFFF
+    classDef INPUT_BLOCK stroke-width:2px, stroke-dasharray:none, stroke:#00C853, fill:transparent, color:#00C853
+    classDef INPUT stroke-width:2px, stroke-dasharray:none, fill:#e6ffe6, color:#000000
+    classDef EVENT stroke-width:2px, stroke-dasharray:none, fill:#BBDEFB, color:#000000
+    classDef RESEARCH stroke-width:2px, stroke-dasharray:none, fill:#FFF9C4, color:#000000
+    classDef AGENT stroke-width:2px, stroke-dasharray:none, fill:#FFE0B2, color:#000000
+    classDef DECISION stroke-width:2px, stroke-dasharray:none, fill:#E1BEE7,stroke:#D50000, color:#000000
+    classDef RELEASE_CANDIDATE stroke-width:2px, stroke-dasharray:none, fill:#FFF9C4, stroke:#D50000, color:#000000
+    classDef OUTPUT stroke-width:2px, stroke-dasharray:none, fill:#C8E6C9, color:#000000
+    classDef WAIT stroke-width:2px, stroke-dasharray:none, fill:#FFB74D, stroke:#F57C00, color:#000000

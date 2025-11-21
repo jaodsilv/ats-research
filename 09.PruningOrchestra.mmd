@@ -1,0 +1,130 @@
+---
+config:
+  layout: dagre
+---
+flowchart TD
+ subgraph s0["Resume Tailoring Orchestra"]
+        START --> INPUT0["Polished Draft"]
+        %% Best Practices
+        %%  + Master Resume
+        %%  + Company Culture
+        %%  + Parsed JD
+        %%  + Match and Skills Gap Analysis
+        s1
+
+        %% Shape definitions
+        START@{ shape: start}
+        STOP@{ shape: stop}
+        INPUT0@{ shape: tag-doc}
+
+        COMMENT["Repeate this process with one orchestrator agent per selected Job Description"]
+        COMMENT@{ shape: braces}
+
+        INPUT0:::INPUT
+ end
+  
+INPUT0 --> AGENT0
+
+ subgraph s1["Ideal Length Fitting Orchestra"]
+        AGENT0["TEX template filler"] --> TEX0["TEX file"]
+        TEX0 --> COMPILER0["Bash .tex compiler"]
+        COMPILER0 --> RELEASE_CANDIDATE0["Release Candidate"]
+        RELEASE_CANDIDATE0 --> HUMAN0["Human Visual Evaluation Feedback"]
+        HUMAN0 --> DECISION0["Is it short enough?"]
+        DECISION0 -- Yes
+        Promote Version --> J1
+        DECISION0 -- No --> WAIT0["Best Practices
+        + Company Culture
+        + Parsed JD
+        + Match and Skills Gap Analysis
+        + Polished Draft"]
+        WAIT0 --> AGENT1["Text Impact Score Calculator"]
+        WAIT0 --> AGENT2["Rewriting options evaluator"]
+        WAIT0 --> AGENT3["Removal options evaluator"]
+        AGENT1 --> WAIT1["Wait"]
+        AGENT2 --> WAIT1
+        AGENT3 --> WAIT1
+        WAIT1 --> AGENT4["Delta Scores Calculator"]
+        AGENT4 --> AGENT5["Changes Ranker"]
+        AGENT5 --> RANKED_CHANGES["Ranked Changes"]
+        RANKED_CHANGES --> J2
+        J2 --> AGENT6["Change Executor"]
+        AGENT6 --> DRAFT1["Changed Draft"]
+        DRAFT1 --> AGENT7["TEX template filler"]
+        AGENT7 --> TEX1["TEX file"]
+        TEX1 --> COMPILER1["Bash .tex compiler"]
+        COMPILER1 --> RELEASE_CANDIDATE1["Release Candidate"]
+        RELEASE_CANDIDATE1 --> HUMAN1["Human Visual Evaluation Feedback"]
+        HUMAN1 --> DECISION1["Is it short enough?"]
+        DECISION1 -- Yes
+        Promote Version --> J1
+        DECISION1 -- No --> J2
+        J1 --> OUT1["Release Version"]
+
+        %% Shape definitions
+        HUMAN0@{ shape: manual-input}
+        HUMAN1@{ shape: manual-input}
+        DECISION0@{ shape: decision}
+        DECISION1@{ shape: decision}
+        AGENT0@{ shape: proc}
+        AGENT1@{ shape: proc}
+        AGENT2@{ shape: proc}
+        AGENT3@{ shape: proc}
+        AGENT4@{ shape: proc}
+        AGENT5@{ shape: proc}
+        AGENT6@{ shape: proc}
+        AGENT7@{ shape: proc}
+        COMPILER0@{ shape: proc}
+        COMPILER1@{ shape: proc}
+        WAIT0@{ shape: stadium}
+        WAIT1@{ shape: stadium}
+        RANKED_CHANGES@{ shape: doc}
+        DRAFT1@{ shape: doc}
+        RELEASE_CANDIDATE0@{ shape: doc}
+        RELEASE_CANDIDATE1@{ shape: doc}
+        OUT1@{ shape: doc}
+        TEX0@{ shape: doc}
+        TEX1@{ shape: doc}
+        J1@{ shape: junction}
+        J2@{ shape: junction}
+
+        %% Class assignments
+        HUMAN0:::INPUT
+        HUMAN1:::INPUT
+        DECISION0:::DECISION
+        DECISION1:::DECISION
+        COMPILER0:::AGENT
+        COMPILER1:::AGENT
+        AGENT0:::AGENT
+        AGENT1:::AGENT
+        AGENT2:::AGENT
+        AGENT3:::AGENT
+        AGENT4:::AGENT
+        AGENT5:::AGENT
+        AGENT6:::AGENT
+        AGENT7:::AGENT
+        WAIT0:::WAIT
+        WAIT1:::WAIT
+        RANKED_CHANGES:::OUTPUT
+        DRAFT1:::OUTPUT
+        RELEASE_CANDIDATE0:::RELEASE_CANDIDATE
+        RELEASE_CANDIDATE1:::RELEASE_CANDIDATE
+        OUT1:::RELEASE_CANDIDATE
+        TEX0:::OUTPUT
+        TEX1:::OUTPUT
+  end
+  
+  OUT1 --> STOP
+    
+    classDef ORCHESTRA stroke-width:2px, stroke-dasharray:none, stroke:#D50000, fill:transparent, color:#D50000
+    classDef SUBORCHESTRA stroke-width:2px, stroke-dasharray:none, stroke:#2962FF, fill:FFE0B2, color:#FFFFFF
+    classDef INPUT_BLOCK stroke-width:2px, stroke-dasharray:none, stroke:#00C853, fill:transparent, color:#00C853
+    classDef INPUT stroke-width:2px, stroke-dasharray:none, fill:#e6ffe6, color:#000000
+    classDef EVENT stroke-width:2px, stroke-dasharray:none, fill:#BBDEFB, color:#000000
+    classDef RESEARCH stroke-width:2px, stroke-dasharray:none, fill:#FFF9C4, color:#000000
+    classDef AGENT stroke-width:2px, stroke-dasharray:none, fill:#FFE0B2, color:#000000
+    classDef DECISION stroke-width:2px, stroke-dasharray:none, fill:#E1BEE7,stroke:#D50000, color:#000000
+    classDef RELEASE_CANDIDATE stroke-width:2px, stroke-dasharray:none, fill:#FFF9C4, stroke:#D50000, color:#000000
+    classDef OUTPUT stroke-width:2px, stroke-dasharray:none, fill:#C8E6C9, color:#000000
+    classDef WAIT stroke-width:2px, stroke-dasharray:none, fill:#FFB74D, stroke:#F57C00, color:#000000
+    classDef MANUAL_INPUT stroke-width:2px, stroke-dasharray:none, fill:#FFE0B2, stroke:#D50000, color:#000000

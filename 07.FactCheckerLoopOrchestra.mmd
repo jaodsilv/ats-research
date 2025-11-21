@@ -1,0 +1,55 @@
+---
+config:
+  layout: dagre
+---
+flowchart TD
+  START
+  s3
+
+  M1["Repeate this process with one orchestrator agent per selected Job Description"]
+  M1@{ shape: braces}
+
+  START@{ shape: start}
+  STOP@{ shape: stop}
+
+  s3:::ORCHESTRA
+
+  START --> W4["Draft + Master Resume"]
+
+ subgraph s3["Fact Checking Loop Orchestra"]
+        W4 -- Launch 1 subagent --> A4["Fact Checker"]
+        A4 --> D2{"Has False Facts?"}
+        D2 -- Yes
+        Launch 1 subagent  --> H["Revised Resume/Cover Letter Draft Writer"]
+        H --> D4["Drafts"]
+        D4 --> W4
+        
+        %% Shape definitions
+        W4@{ shape: stadium}
+        A4@{ shape: proc}
+        H@{ shape: proc}
+        D4@{ shape: doc}
+
+        %% Class assignments
+        A4:::AGENT
+        D2:::DECISION
+        D4:::OUTPUT
+        H:::AGENT
+        W4:::WAIT
+        
+        %% Styles
+        style W4 stroke #000
+  end
+    D2 -- No --> STOP
+
+    classDef ORCHESTRA stroke-width:2px, stroke-dasharray:none, stroke:#D50000, fill:transparent, color:#D50000
+    classDef SUBORCHESTRA stroke-width:2px, stroke-dasharray:none, stroke:#2962FF, fill:FFE0B2, color:#FFFFFF
+    classDef INPUT_BLOCK stroke-width:2px, stroke-dasharray:none, stroke:#00C853, fill:transparent, color:#00C853
+    classDef INPUT stroke-width:2px, stroke-dasharray:none, fill:#e6ffe6, color:#000000
+    classDef EVENT stroke-width:2px, stroke-dasharray:none, fill:#BBDEFB, color:#000000
+    classDef RESEARCH stroke-width:2px, stroke-dasharray:none, fill:#FFF9C4, color:#000000
+    classDef AGENT stroke-width:2px, stroke-dasharray:none, fill:#FFE0B2, color:#000000
+    classDef DECISION stroke-width:2px, stroke-dasharray:none, fill:#E1BEE7,stroke:#D50000, color:#000000
+    classDef RELEASE_CANDIDATE stroke-width:2px, stroke-dasharray:none, fill:#FFF9C4, stroke:#D50000, color:#000000
+    classDef OUTPUT stroke-width:2px, stroke-dasharray:none, fill:#C8E6C9, color:#000000
+    classDef WAIT stroke-width:2px, stroke-dasharray:none, fill:#FFB74D, stroke:#F57C00, color:#000000

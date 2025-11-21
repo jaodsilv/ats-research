@@ -1,0 +1,54 @@
+---
+config:
+  layout: dagre
+---
+flowchart TD
+ subgraph s0["Resume/Cover Letter Tailoring Orchestra"]
+        START --> W1["Master Resume
+         + Company Culture Report
+         + Parsed Job Descriptions"]
+        s2
+        STOP
+        START@{ shape: start}
+        STOP@{ shape: stop}
+        s2:::ORCHESTRA
+ end
+
+ subgraph s2["JD Matching Orchestra"]
+        W1 -- 1 subagent per JD
+              Multiple Agents Job --> MA3["Resume-Job Description Matcher<br>(with Skills Gap Analysis)"]
+        MA3 -- Write
+        1 document per JD --> OUT4["JD x Resume Match and Skills Gap Analysis"]
+        OUT4 --> D1["Are there multiple Job Descriptions?"]
+        D1 -- Yes
+        Single Agent Job --> A1["JDs Ranker + Selector"]
+        A1 -- Write --> OUT5["Selected Parsed JDs + Match and Skills Gap Analysis"]
+        D1 -- No
+        No ranking and selction needed --> OUT5
+       
+        OUT4@{ shape: docs}
+        OUT5@{ shape: docs}
+        W1@{ shape: stadium}
+        MA3@{ shape: procs}
+        D1@{ shape: diam}
+        A1@{ shape: proc}
+         OUT4:::OUTPUT
+         OUT5:::OUTPUT
+         W1:::WAIT
+         MA3:::AGENT
+         D1:::DECISION
+         A1:::AGENT
+  end
+OUT5 --> STOP
+
+classDef ORCHESTRA stroke-width:2px, stroke-dasharray:none, stroke:#D50000, fill:transparent, color:#D50000
+classDef SUBORCHESTRA stroke-width:2px, stroke-dasharray:none, stroke:#2962FF, fill:FFE0B2, color:#FFFFFF
+classDef INPUT_BLOCK stroke-width:2px, stroke-dasharray:none, stroke:#00C853, fill:transparent, color:#00C853
+classDef INPUT stroke-width:2px, stroke-dasharray:none, fill:#e6ffe6, color:#000000
+classDef EVENT stroke-width:2px, stroke-dasharray:none, fill:#BBDEFB, color:#000000
+classDef RESEARCH stroke-width:2px, stroke-dasharray:none, fill:#FFF9C4, color:#000000
+classDef AGENT stroke-width:2px, stroke-dasharray:none, fill:#FFE0B2, color:#000000
+classDef DECISION stroke-width:2px, stroke-dasharray:none, fill:#E1BEE7,stroke:#D50000, color:#000000
+classDef RELEASE_CANDIDATE stroke-width:2px, stroke-dasharray:none, fill:#FFF9C4, stroke:#D50000, color:#000000
+classDef OUTPUT stroke-width:2px, stroke-dasharray:none, fill:#C8E6C9, color:#000000
+classDef WAIT stroke-width:2px, stroke-dasharray:none, fill:#FFB74D, stroke:#F57C00, color:#000000
